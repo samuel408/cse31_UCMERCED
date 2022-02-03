@@ -1,0 +1,93 @@
+Activity
+1. Record your TPS partners’ names. 
+Rowan 
+Benjamin
+Mark
+2. Independently search the internet for 3 online tutorials on how to use Linux terminal. 
+https://www.youtube.com/watch?v=V1y-mbWM3B8&ab_channel=Guru99
+https://www.youtube.com/watch?v=BMGixkvJ-6w&ab_channel=SkillsFactory
+https://www.youtube.com/watch?v=Wgi-OfbP2Gw&ab_channel=edureka%21
+
+3. Share your tutorials with your TPS partners. 
+4. Bookmark your results in the browser of your computer. 
+
+Activity 2
+
+1. How can you open a terminal from your Linux computer? 
+ctrl + lt then press terminal
+
+a. Can you open more than 1 terminal at the same time? 
+Yes
+b. Why do you think you want to open more than 1 terminal at the same time? 
+to control more than 1 directory with out having to exit out of your current directory.
+2. In the terminal, how can you tell what are contents inside the current directory (i.e., what is the 
+command)? 
+type in the command ls
+3. From your current directory, how can you navigate to Desktop directory?  
+type in command cd Desktop/
+4. While you are in Desktop, create a new directory called CSE31. How do you do this? 
+ type in command mkdir CSE31
+
+ Activity 3
+
+ 1. Independently find 2 online references on how to use GCC in a Linux terminal. 
+2. Share what you have found with your partners and save your results in the bookmark of your browser. 
+You will refer to these references to answer the following questions. 
+3. What command do you type in the terminal to compile your main.c? 
+gcc main.c
+4. How do you know if your program has compiled successfully? 
+we get .out file
+5. What does the –c flag do in gcc? 
+compiles source files but doesnt link them
+6. What does the –g flag do in gcc? 
+generates debug information
+7. How do you change the executable name from main to cselab1?  
+gcc -o cselab1 main.c
+8. What happens when you compile your code by typing gcc main.c only?  
+the executeable file will be a.out not cselab1.out
+9. Now, let us run the program you have just compiled. What command do you use? 
+./cselab1.out
+
+#include <stdio.h>
+
+int main(){
+    int even = 0, odd = 0, evenCnt, oddCnt;
+
+    int temp = 1;
+    int count = 1;
+
+    while(temp){
+        int input,sum = 0,mod;
+        printf("Please enter the %d integer", count);
+        scanf("%d",&input);
+
+        temp = input;
+        while(input > 0){
+            mod = temp % 10;
+            sum = sum + mod;
+            temp = temp / 10;
+        }
+
+        if(sum % 2){
+            // odd
+            odd = odd + input;
+            oddCnt = oddCnt + 1;
+
+        }
+        else{
+            // even
+            even = even + input;
+            evenCnt = evenCnt + 1;
+        }
+
+        count = count + 1;
+        temp = input;
+    }
+
+    double evenAvg = even / evenCnt;
+    double oddAvg = odd / oddCnt;
+
+    print out results
+
+    averages
+} 
