@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int main(){
+    int even = 0, odd = 0, evenCnt, oddCnt;
+
+    int temp = 1;
+    int count = 1;
+
+    while(temp){
+        int input,sum = 0,mod;
+        printf("Please enter the %d integer", count);
+        scanf("%d",&input);
+
+        temp = input;
+        while(input > 0){
+            mod = temp % 10;
+            sum = sum + mod;
+            temp = temp / 10;
+        }
+
+        if(sum % 2){
+            // odd
+            odd = odd + input;
+            oddCnt = oddCnt + 1;
+
+        }
+        else{
+            // even
+            even = even + input;
+            evenCnt = evenCnt + 1;
+        }
+
+        count = count + 1;
+        temp = input;
+    }
+
+    double evenAvg = even / evenCnt;
+    double oddAvg = odd / oddCnt;
+
+    print out results

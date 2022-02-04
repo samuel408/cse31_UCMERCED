@@ -70,7 +70,7 @@
     // for loop that adds up numbers
      for(int i = 0;i < oddCount; i++ ){
          oddSum += arrOdd[i];
-                //   printf("%d\n",arrOdd[i]);
+                  printf("odd sum is %d\n",oddSum);
 
 
          
@@ -79,23 +79,48 @@
 
           for(int i = 0;i < evenCount; i++ ){
          evenSum += arrEven[i];
-                //   printf("%d\n",arrEven[i]);
+                  printf(" even sum is %d\n",evenSum);
 
 
          
      }       
     //    printf("%d\n",evenSum);
-     double oddAvg = oddSum/oddCount;
-     double evenAvg = evenSum/(evenCount -1); //the -1 is to compensate for the 0 that ends program
+     double oddAvg = oddSum / oddCount;
+     double evenAvg = evenSum / (evenCount -1.0); //the -1 is to compensate for the 0 that ends program
+     int totalSum = oddSum + evenSum;
+     int totalCount = oddCount + evenCount;
+     double totalAvg = totalSum / (totalCount - 1.0);
+
 
     //print
-    if (evenCount != 0){
-        printf("Average of inputs whose digits sum up to an odd number: %d\n",oddAvg );
+    if (totalSum % 2 == 1 ){
+                printf("Average of inputs whose digits sum up to an odd number: %1f\n",totalAvg );
+
+                if( counter > 5){
+                printf("Average of inputs whose digits sum up to an even number: %1f\n",evenAvg );
+
+                }
+
 
     }
-    if (evenCount != 0){
-        printf("Average of inputs whose digits sum up to an odd number: %d\n",evenAvg );
+    else{
+
+
+    
+        printf("Average of inputs whose digits sum up to an even number: %1f\n",totalAvg );
+
+            if( counter > 5){
+
+        printf("Average of inputs whose digits sum up to an odd number: %1f\n",oddAvg );
+                        }
+
+
+
+    
         
     }
+    
+
+   
        return 0; 
  } 
