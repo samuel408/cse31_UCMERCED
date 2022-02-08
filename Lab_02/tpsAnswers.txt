@@ -35,13 +35,22 @@ display those values.
 
 3. How do you prevent x, y, and the content of arr from having unexpected values? Try to fix them in 
 the program. 
+
+assign the values of the variables to 0.
+
 4. The moment you have declared a variable, the program will allocate a memory location for it. Each 
 memory location has an address. Now insert printf statements to display the addresses of x and y. 
+
 5. Now insert code so that px points to x and py points to y. Print out the values and addresses of those 
 pointers using only the pointer variables (yes, pointers have addresses too!). You should see that the value of 
 px is equal to the address of x, and the same is true for py and y. 
+
+px=&x
+py=&y
+
 6. As we have learned in lectures, an array name can be used as a pointer to access the content of the array. 
 Write a loop to output the contents of arr by using arr as a pointer (do not use [] in your loop). 
+
 7. Are array names really the same as pointers? Let us find out! An array name points to the first element 
 of an array, so arr should point to the address of arr[0]. Insert code to verify this. 
 8. Now print out the address of arr. Does the result make sense? Why? 

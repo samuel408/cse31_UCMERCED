@@ -15,7 +15,7 @@ int read_values(double sum) {
   while(input != 0) {
     values++;
     sum += input;
-    scanf("%d", &input);
+    scanf("%d", input);
   }
   return values;
 }
@@ -24,8 +24,7 @@ int main() {
   double sum = 0;
   int values;
   values = read_values(sum);
-  double average = sum/values;
-  printf("\nAverage: %1f\n", &average); // Hint: How do we ensure that sum is updated here AFTER read_value manipulates it?
+  printf("\nAverage: %g\n", sum/values); // Hint: How do we ensure that sum is updated here AFTER read_value manipulates it?
   return 0;
 }
 

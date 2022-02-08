@@ -1,0 +1,5 @@
+asssignment 1
+line 27 caused the segmentation fault i fixed it by grabing the printing statment
+and creating into a variable and giving it an ampersand which it gets recognized as
+a pointed variable.
+
