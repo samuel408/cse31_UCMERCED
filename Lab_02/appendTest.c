@@ -16,7 +16,7 @@ char* append(char s1[], char s2[]) {
     return s1;
 }
 
-int main() {
+int main() {// string needs more memory for the 0 at the end;
     char str1[10];
     char str2[10];
     while (1) {
