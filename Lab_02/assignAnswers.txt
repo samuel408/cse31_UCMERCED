@@ -1,5 +1,22 @@
 asssignment 1
-line 27 caused the segmentation fault i fixed it by grabing the printing statment
-and creating into a variable and giving it an ampersand which it gets recognized as
-a pointed variable.
+1. What line caused the segmentation fault? 
+2. How do you fix the line so it works properly? 
+ 
+You can recompile the code and run the program again. The program now reads all the input values but the 
+average calculated is still incorrect. Use GDB to fix the program by looking at the output of 
+read_values. To do this, either set a breakpoint using the line number or set a breakpoint in the 
+read_values function. Then continue executing till the end of the function and view the values being 
+returned. Answer the following questions (in the text file assignAnswers.txt as mentioned above): 
+3. What is the bug here?  
+4. How do you fix it? 
+
+1. Run the program with the following input: “HELLO!” for str1 and “hello!” for str2. Is the output 
+expected? 
+2. Do not stop the program, enter “HI!” for str1 and “hi!” for str2. Is the output expected? What is 
+the bug here? Try to fix the program so it will print the output correctly. 
+3. Do not stop the program, enter “Hello! How are you?” for str1 and “I am fine, thank 
+you!” for str2. Is the output expected?  Why do you think this happens? You do not need to fix 
+this. 
+
+
 
