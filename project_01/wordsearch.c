@@ -59,12 +59,35 @@ void printPuzzle(char** arr) {
     // It must produce the output in the SAME format as the samples 
     // in the instructions.
     // Your implementation here...
-    int i, j;
-    int size = sizeof(arr);
 
-    printf(" size of array is: %d \n",size );
 
-    // for (i = 0; i < size;  
+    // int i, j;
+    // int size = sizeof(arr);
+    // //print a for loop.
+    // for(i = 0; i < size; i++){    // using pointer notation to traverse 2d array
+
+    //     for (j = 0; i < size ;j++){
+    //         printf("%c", *arr);
+    //     }
+
+    // }
+
+    int size = bSize;
+
+    for (int i = 0; i < size; i++) //accessing rows with i
+    {
+        for (int j = 0; j < size; j++) //accessing columns with j
+        {
+            printf(" %c ", *(*(arr + i) + j)); // array2D
+        }
+        printf("\n");
+    }
+    return;
+    //free(size);
+}
+
+
+
 }
 
 void searchPuzzle(char** arr, char* word) {
