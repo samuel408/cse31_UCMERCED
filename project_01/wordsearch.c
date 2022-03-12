@@ -88,7 +88,6 @@ void printPuzzle(char** arr) {
 
 
 
-}
 
 void searchPuzzle(char** arr, char* word) {
     // This function checks if arr contains the search word. If the 
