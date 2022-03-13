@@ -205,6 +205,7 @@ void searchPuzzle(char** arr, char* word) {
         return ;
     }
 // printf("%x %x %x %x %x ",&ptr0, &ptr1, &ptr2, &ptr3, &ptr4 );
+
     return ;
 
 
