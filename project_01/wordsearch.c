@@ -96,4 +96,56 @@ void searchPuzzle(char** arr, char* word) {
     // different message as shown in the sample runs.
     // Your implementation here...
 
+    //converts all letters to capital letters.
+
+    for (int i = 0; *(word + i) != '\0'; i++)
+    {
+        if (*(word + i) >= 'a' && *(word + i) <= 'z')
+        {
+            *(word + i) = *(word + i) - 32;
+        }
+    }
+
+    //check to see if the word is inside 
+
+    int wordSize = strlen(word);//checks word size
+    // printf("%d",wordSize);
+
+     int size = bSize;
+
+     //loop that creates variables based on how many letters there are
+
+    //  for( int i =0; i < wordSize; i++){
+    //      char* ptr = NULL;
+    //  }
+    int count = 0;
+    int first =0;
+
+    for (int i = 0; i < size; i++) //accessing rows with i
+    {
+        for (int j = 0; j < size; j++) //accessing columns with j
+        {
+            for(int k = 0; k < wordSize;k++){// checks to see if the letter matches.
+                if(word[k] == (*(*(arr + i) + j))){
+                    count ++;
+                }
+                if(word[0] == (*(*(arr + i) + j))){
+                    first = 1;
+                
+                }
+            }
+        }
+    }
+
+    if (first == 1 &&  count >=1){
+        printf("Word found!");
+    }
+    else {
+        printf("Word not found!");
+        return ;
+    }
+
+    return ;
+
+
 }
