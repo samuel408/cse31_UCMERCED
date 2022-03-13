@@ -7,6 +7,10 @@
 void printPuzzle(char** arr);
 void searchPuzzle(char** arr, char* word);
 int bSize;
+void declarePointer(int order, char *arr);
+//declare bunch of char pointers
+char *ptr0=NULL,*ptr1=NULL,*ptr2=NULL,*ptr3=NULL,*ptr4=NULL,*ptr5=NULL,*ptr6=NULL,*ptr7=NULL,*ptr8=NULL;
+
 
 // Main function, DO NOT MODIFY 	
 int main(int argc, char **argv) {
@@ -52,6 +56,59 @@ int main(int argc, char **argv) {
     searchPuzzle(block, word);
     
     return 0;
+}
+
+//declared 
+ void declarePointer(int order, char *arr){
+    switch(order) {
+
+   case 0  :
+      ptr0 = arr;
+      break; /* optional */
+	
+   case 1 :
+         ptr1 = arr;
+
+      break; /* optional */
+    
+    case 2 :
+          ptr2 = arr;
+
+      break; /* optional */
+
+    case 3 :
+          ptr3 = arr;
+
+      break; /* optional */
+
+    case 4 :
+          ptr4 = arr;
+
+
+      break; /* optional */
+
+    case 5:
+          ptr5 = arr;
+
+      break; /* optional */
+    
+    case 6 :
+          ptr6 = arr;
+
+      break; /* optional */
+    
+    case 7 :
+          ptr7 = arr;
+
+      break; /* optional */
+    
+    case 8 :
+          ptr8 = arr;
+
+      break; /* optional */
+
+}
+
 }
 
 void printPuzzle(char** arr) {
@@ -126,8 +183,11 @@ void searchPuzzle(char** arr, char* word) {
         for (int j = 0; j < size; j++) //accessing columns with j
         {
             for(int k = 0; k < wordSize;k++){// checks to see if the letter matches.
+
                 if(word[k] == (*(*(arr + i) + j))){
                     count ++;
+                    declarePointer(k, (*(*(arr + i) + j)));
+
                 }
                 if(word[0] == (*(*(arr + i) + j))){
                     first = 1;
@@ -144,7 +204,7 @@ void searchPuzzle(char** arr, char* word) {
         printf("Word not found!");
         return ;
     }
-
+// printf("%x %x %x %x %x ",&ptr0, &ptr1, &ptr2, &ptr3, &ptr4 );
     return ;
 
 
