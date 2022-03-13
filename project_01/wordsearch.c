@@ -8,6 +8,7 @@ void printPuzzle(char** arr);
 void searchPuzzle(char** arr, char* word);
 int bSize;
 void declarePointer(int order, char *arr);
+void printPath(char* word, char** arr,int count);
 //declare bunch of char pointers
 char *ptr0=NULL,*ptr1=NULL,*ptr2=NULL,*ptr3=NULL,*ptr4=NULL,*ptr5=NULL,*ptr6=NULL,*ptr7=NULL,*ptr8=NULL;
 
@@ -111,6 +112,7 @@ int main(int argc, char **argv) {
 
 }
 
+
 void printPuzzle(char** arr) {
 	// This function will print out the complete puzzle grid (arr). 
     // It must produce the output in the SAME format as the samples 
@@ -144,7 +146,35 @@ void printPuzzle(char** arr) {
 }
 
 
+void printPath(char* word, char** arr,int count){
+if( count = 0){//we have reached the end kill program
+    return;
+}
+int wordSize = strlen(word);//checks word size
+    // printf("%d",wordSize);
+    
 
+         int size = bSize;// size of array rows and columns
+
+
+    for (int i = 0; i < size; i++) //accessing rows with i
+    {
+        for (int j = 0; j < size; j++) //accessing columns with j
+        {
+            if(word[0] == (*(*(arr + i) + j))){//if number is equal print wordsize to label path number;
+                printf("0");
+            }
+            else {
+              printf("0");//if number is irrelevant print 0
+
+            }
+        }
+    }
+    count = count -1;
+    printPath( word, arr, count);
+    return;
+    
+}
 
 void searchPuzzle(char** arr, char* word) {
     // This function checks if arr contains the search word. If the 
@@ -204,10 +234,14 @@ void searchPuzzle(char** arr, char* word) {
         printf("Word not found!");
         return ;
     }
+
+    printf("\n");
 // printf("%x %x %x %x %x ",&ptr0, &ptr1, &ptr2, &ptr3, &ptr4 );
 
 // printing path 
-printf("Printing the search path:");
+printf("Printing the search path: \n");
+    
+    printPath(word, arr, wordSize);
 
     return ;
 
