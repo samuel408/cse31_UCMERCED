@@ -8,9 +8,10 @@ void printPuzzle(char** arr);
 void searchPuzzle(char** arr, char* word);
 int bSize;
 void declarePointer(int order, char *arr);
-void printPath(char* word, char** arr,int count);
+int printPath(char* word, char** arr,int wordSize,int count);
 //declare bunch of char pointers
 char *ptr0=NULL,*ptr1=NULL,*ptr2=NULL,*ptr3=NULL,*ptr4=NULL,*ptr5=NULL,*ptr6=NULL,*ptr7=NULL,*ptr8=NULL;
+int OGwordSize =0;
 
 
 // Main function, DO NOT MODIFY 	
@@ -146,33 +147,67 @@ void printPuzzle(char** arr) {
 }
 
 
-void printPath(char* word, char** arr,int count){
-if( count = 0){//we have reached the end kill program
-    return;
-}
-int wordSize = strlen(word);//checks word size
-    // printf("%d",wordSize);
-    
 
+
+int printPath(char* word, char** arr,int length ,int count){
+    
+if(count == OGwordSize){//we have reached the end kill program
+// printf("word size is : %d and count is %d-----", OGwordSize, count);
+return 0;
+}
+else{
+// printf("word size is : %d and count is %d", OGwordSize, count);
+
+    
+int end=0;
          int size = bSize;// size of array rows and columns
 
 
     for (int i = 0; i < size; i++) //accessing rows with i
     {
+      
+
         for (int j = 0; j < size; j++) //accessing columns with j
         {
-            if(word[0] == (*(*(arr + i) + j))){//if number is equal print wordsize to label path number;
-                printf("0");
+            
+                            
+            if(word[count] == (*(*(arr + i) + j))){//if number is equal print wordsize to label path number;
+                printf("%d       ", count+1);
+                
+
+                    if (j == bSize){
+                                        printf("\n");
+
+                    }
+                        end = printPath( word, arr, length-1, count+1 );
+                        
+                            if(end = 1){
+                                return 1;
+                                        }
+
+
+               
             }
             else {
-              printf("0");//if number is irrelevant print 0
+              printf("0       ");//if number is irrelevant print 0
+            //   printPath( word, arr, count-1);
+
+           
 
             }
+           
+           
+
         }
+
+                printf("\n");
+            
     }
-    count = count -1;
-    printPath( word, arr, count);
-    return;
+}
+    return 0;
+
+
+
     
 }
 
@@ -216,7 +251,7 @@ void searchPuzzle(char** arr, char* word) {
 
                 if(word[k] == (*(*(arr + i) + j))){
                     count ++;
-                    declarePointer(k, (*(*(arr + i) + j)));
+                    declarePointer(k,(char*)(*(*(arr + i) + j)));
 
                 }
                 if(word[0] == (*(*(arr + i) + j))){
@@ -240,10 +275,12 @@ void searchPuzzle(char** arr, char* word) {
 
 // printing path 
 printf("Printing the search path: \n");
+    OGwordSize = wordSize;
     
-    printPath(word, arr, wordSize);
 
-    return ;
+     int end = printPath(word, arr, wordSize,0);
+                printf("\n");
+
 
 
 }
