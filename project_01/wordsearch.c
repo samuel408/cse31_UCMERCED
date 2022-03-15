@@ -153,19 +153,19 @@ void printPuzzle(char** arr) {
 
 void finalPrint(char**store){
     int size = bSize;
-        for (int i = 0; i < size; i++) //accessing rows with i
-    {
-        for (int j = 0; j < size; j++) //accessing columns with j
-        {
-            printf(" %c ", *(*(store + i) + j)); // array2D
+    //     for (int i = 0; i < size; i++) //accessing rows with i
+    // {
+    //     for (int j = 0; j < size; j++) //accessing columns with j
+    //     {
+    //         printf(" %c ", *(*(store + i) + j)); // array2D
 
 
-        }
-        printf("\n");
+    //     }
+    //     printf("\n");
 
-    }
-    // int arrSize =sizeof(store);
-    // printf("%d",arrSize );
+    // }
+    int arrSize =sizeof(store);
+    printf("%d",arrSize );
 
 }
 
