@@ -8,10 +8,12 @@ void printPuzzle(char** arr);
 void searchPuzzle(char** arr, char* word);
 int bSize;
 void declarePointer(int order, char *arr);
-int printPath(char* word, char** arr,int wordSize,int count);
+int printPath(char**store,char* word, char** arr,int wordSize,int count);
+void finalPrint(char** store);
 //declare bunch of char pointers
 char *ptr0=NULL,*ptr1=NULL,*ptr2=NULL,*ptr3=NULL,*ptr4=NULL,*ptr5=NULL,*ptr6=NULL,*ptr7=NULL,*ptr8=NULL;
 int OGwordSize =0;
+
 
 
 // Main function, DO NOT MODIFY 	
@@ -35,6 +37,8 @@ int main(int argc, char **argv) {
     
     // Allocate space for the puzzle block and the word to be searched
     char **block = (char**)malloc(bSize * sizeof(char*));
+            printf("%d",sizeof(block));
+
     char *word = (char*)malloc(20 * sizeof(char));
 
     // Read puzzle block into 2D arrays
@@ -139,6 +143,8 @@ void printPuzzle(char** arr) {
         for (int j = 0; j < size; j++) //accessing columns with j
         {
             printf(" %c ", *(*(arr + i) + j)); // array2D
+
+
         }
         printf("\n");
     }
@@ -146,11 +152,32 @@ void printPuzzle(char** arr) {
     //free(size);
 }
 
+void finalPrint(char**store){
+    int size = bSize;
+    //     for (int i = 0; i < size; i++) //accessing rows with i
+    // {
+    //     for (int j = 0; j < size; j++) //accessing columns with j
+    //     {
+    //         printf(" %c ", *(*(store + i) + j)); // array2D
+
+
+    //     }
+    //     printf("\n");
+
+    // }
+    int arrSize =sizeof(store);
+    printf("%d",arrSize );
+
+}
 
 
 
-int printPath(char* word, char** arr,int length ,int count){
-    
+
+int printPath(char**store,char* word, char** arr,int length ,int count){
+    // printf("%d", sizeof(store));
+
+             int size = bSize;// size of array rows and columns
+
 if(count == OGwordSize){//we have reached the end kill program
 // printf("word size is : %d and count is %d-----", OGwordSize, count);
 return 0;
@@ -160,7 +187,6 @@ else{
 
     
 int end=0;
-         int size = bSize;// size of array rows and columns
 
 
     for (int i = 0; i < size; i++) //accessing rows with i
@@ -173,15 +199,19 @@ int end=0;
                             
             if(word[count] == (*(*(arr + i) + j))){//if number is equal print wordsize to label path number;
                 printf("%d       ", count+1);
+                // (*(*(store + i) + j)) = (char)count+1;
+
                 
 
                     if (j == bSize){
                                         printf("\n");
 
                     }
-                        end = printPath( word, arr, length-1, count+1 );
+                        end = printPath(  store, word, arr, length-1, count+1 );
                         
-                            if(end = 1){
+                            if(end == 1){
+                                // printf("%lu", sizeof(store));
+                                // finalPrint(store);
                                 return 1;
                                         }
 
@@ -191,7 +221,9 @@ int end=0;
             else {
               printf("0       ");//if number is irrelevant print 0
             //   printPath( word, arr, count-1);
+                //  (*(*(store + i) + j)) = '0';
 
+ 
            
 
             }
@@ -201,6 +233,7 @@ int end=0;
         }
 
                 printf("\n");
+
             
     }
 }
@@ -219,6 +252,8 @@ void searchPuzzle(char** arr, char* word) {
     // Your implementation here...
 
     //converts all letters to capital letters.
+
+
 
     for (int i = 0; *(word + i) != '\0'; i++)
     {
@@ -252,6 +287,7 @@ void searchPuzzle(char** arr, char* word) {
                 if(word[k] == (*(*(arr + i) + j))){
                     count ++;
                     declarePointer(k,(char*)(*(*(arr + i) + j)));
+                    
 
                 }
                 if(word[0] == (*(*(arr + i) + j))){
@@ -274,12 +310,18 @@ void searchPuzzle(char** arr, char* word) {
 // printf("%x %x %x %x %x ",&ptr0, &ptr1, &ptr2, &ptr3, &ptr4 );
 
 // printing path 
+char **pathStore= (char**)malloc(bSize * sizeof(char*));
+        // printf("%d",sizeof(block));
 printf("Printing the search path: \n");
     OGwordSize = wordSize;
-    
 
-     int end = printPath(word, arr, wordSize,0);
+
+        
+
+
+     int end = printPath(pathStore,word, arr, wordSize,0);
                 printf("\n");
+            
 
 
 
