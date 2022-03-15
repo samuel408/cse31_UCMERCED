@@ -37,7 +37,6 @@ int main(int argc, char **argv) {
     
     // Allocate space for the puzzle block and the word to be searched
     char **block = (char**)malloc(bSize * sizeof(char*));
-            printf("%d",sizeof(block));
 
     char *word = (char*)malloc(20 * sizeof(char));
 
@@ -154,19 +153,19 @@ void printPuzzle(char** arr) {
 
 void finalPrint(char**store){
     int size = bSize;
-    //     for (int i = 0; i < size; i++) //accessing rows with i
-    // {
-    //     for (int j = 0; j < size; j++) //accessing columns with j
-    //     {
-    //         printf(" %c ", *(*(store + i) + j)); // array2D
+        for (int i = 0; i < size; i++) //accessing rows with i
+    {
+        for (int j = 0; j < size; j++) //accessing columns with j
+        {
+            printf(" %c ", *(*(store + i) + j)); // array2D
 
 
-    //     }
-    //     printf("\n");
+        }
+        printf("\n");
 
-    // }
-    int arrSize =sizeof(store);
-    printf("%d",arrSize );
+    }
+    // int arrSize =sizeof(store);
+    // printf("%d",arrSize );
 
 }
 
@@ -176,7 +175,6 @@ void finalPrint(char**store){
 int printPath(char**store,char* word, char** arr,int length ,int count){
     // printf("%d", sizeof(store));
 
-             int size = bSize;// size of array rows and columns
 
 if(count == OGwordSize){//we have reached the end kill program
 // printf("word size is : %d and count is %d-----", OGwordSize, count);
@@ -187,6 +185,7 @@ else{
 
     
 int end=0;
+             int size = bSize;// size of array rows and columns
 
 
     for (int i = 0; i < size; i++) //accessing rows with i
@@ -207,13 +206,13 @@ int end=0;
                                         printf("\n");
 
                     }
+                    
                         end = printPath(  store, word, arr, length-1, count+1 );
-                        
-                            if(end == 1){
-                                // printf("%lu", sizeof(store));
-                                // finalPrint(store);
+
+                        if(end = 1){
                                 return 1;
                                         }
+                            
 
 
                
