@@ -153,19 +153,18 @@ void printPuzzle(char** arr) {
 
 void finalPrint(char**store){
     int size = bSize;
-    //     for (int i = 0; i < size; i++) //accessing rows with i
-    // {
-    //     for (int j = 0; j < size; j++) //accessing columns with j
-    //     {
-    //         printf(" %c ", *(*(store + i) + j)); // array2D
+        for (int i = 0; i < size; i++) //accessing rows with i
+    {
+        for (int j = 0; j < size-1; j++) //accessing columns with j
+        {
+            printf(" %c ", *(*(store + i) + j)); // array2D
 
 
-    //     }
-    //     printf("\n");
+        }
+        printf("\n");
 
-    // }
-    int arrSize =sizeof(store);
-    printf("%d",arrSize );
+    }
+  
 
 }
 
@@ -190,50 +189,41 @@ int end=0;
 
     for (int i = 0; i < size; i++) //accessing rows with i
     {
-      
-
-        for (int j = 0; j < size; j++) //accessing columns with j
-        {
             
+  *(store + i) = (char*)malloc(bSize* sizeof(char));
+
+        for (int j = 0; j < size-1 ; j++) //accessing columns with j
+        {
+
                             
             if(word[count] == (*(*(arr + i) + j))){//if number is equal print wordsize to label path number;
-                printf("%d       ", count+1);
-                // (*(*(store + i) + j)) = (char)count+1;
+                // printf("%d       ", count+1);
+                // *(*(store + i) + j) = (char)count+1;
+                *(*(store + i) + j ) = (char)(count+1);
 
                 
 
-                    if (j == bSize){
-                                        printf("\n");
+                    // if (j == bSize){
+                    //                     printf("\n");
 
-                    }
+                    // }
                     
                         end = printPath(  store, word, arr, length-1, count+1 );
 
-                        if(end = 1){
+                        if(end =1){
+                            finalPrint(store);
                                 return 1;
                                         }
-                            
-
-
-               
+            
             }
             else {
-              printf("0       ");//if number is irrelevant print 0
+            //   printf("0       ");//if number is irrelevant print 0
             //   printPath( word, arr, count-1);
-                //  (*(*(store + i) + j)) = '0';
-
- 
-           
-
+                 *(*(store + i) + j) = '0';
             }
            
-           
-
         }
-
-                printf("\n");
-
-            
+                printf("\n");   
     }
 }
     return 0;
@@ -315,13 +305,7 @@ printf("Printing the search path: \n");
     OGwordSize = wordSize;
 
 
-        
-
-
      int end = printPath(pathStore,word, arr, wordSize,0);
                 printf("\n");
-            
-
-
 
 }
