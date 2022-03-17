@@ -5,7 +5,7 @@
 // Feel free to declare any helper functions or global variables
 void printPuzzle(char** arr);
 void searchPuzzle(char** arr, char* word);
-void  printFinal(int row[], int [], int size);
+void  printFinal(int *row,int* col, int size);
 int bSize;
 // Main function, DO NOT MODIFY 
 int main(int argc, char **argv) {
@@ -70,7 +70,7 @@ void printPuzzle(char** arr) {
     return;
 }
 
-void printFinal(int row[], int col[], int size){
+void printFinal(int *row, int* col, int size){
     bSize =bSize ;
                             printf("(%d) \n",bSize);
                         // printf("(%d,%d)",row[0],col[0]);
@@ -119,12 +119,19 @@ int j = 0;
         // count ++;
             // if ((*(*(store + i) + j) ) == (*(*(store + (row[i])) + col[j]))){
                 // if (i==row[i]&& j ==col[j]){
-                    hr=row[i];
-                    hc =col[j];
+                    hr= *(row + i);
+                    hc = *(col + j );
                 
-       
-        *(*(store + hr) +hc) = count;
+       if(*(*(store + hr) +hc) != 0){
+           printf("(%d)",(*(*(store + hr) +hc) * 10)+ count);
+              *(*(store + hr) +hc) = (*(*(store + hr) +hc) * 10)+ count ;
+
+
+       }{
+            *(*(store + hr) +hc) = count;
         count ++;
+       }
+       
      
         
 
@@ -177,10 +184,25 @@ void searchPuzzle(char** arr, char* word) {
     // different message as shown in the sample runs.
     // Your implementation here...
     int size = strlen(word);
-    int row[5]={0,1,2,3,4,};
-    int col[5]={3,2,1,4,0};
+    int *row = (int*) malloc(6 * sizeof(int));
+    int *col = (int*) malloc(6 * sizeof(int));
+    for ( int i = 0; i < bSize;i++){
+        *(row + i) = i;
+
+    }
+
+     for ( int j = 0; j < bSize;j++){
+        *(col +j) = j;
+
+    }
+
+    // int row[6]={0,1,2,3,4,5};
+
+    // int col[6]={3,3,3,3,3,3};
     
     printFinal(row,col,size);
+      
+
 
     // printFinal()
 }
