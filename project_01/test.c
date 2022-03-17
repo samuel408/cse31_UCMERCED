@@ -72,44 +72,14 @@ void printPuzzle(char** arr) {
 
 void printFinal(int *row, int* col, int size){
     bSize =bSize ;
-                            printf("(%d) \n",bSize);
-                        // printf("(%d,%d)",row[0],col[0]);
+                        
 int hr=0,hc=0;
    int  count = 1;
-    //intitalize 2d array using pointer notation
-//     int **store= (int**)malloc(bSize* sizeof(int*));
-//     for (int i = 0; i < bSize ; i++){
-//   *(store + i) = (int*)malloc(bSize* sizeof(int*));
-
-//         for (int j = 0; j < bSize;j++){
-//                         // printf("(%d,%d)",row[i],col[j]);
-
-//         //      *(*(store + (row[i])) + (col[j])) = count;
-//         // count ++;
-//             // if ((*(*(store + i) + j) ) == (*(*(store + (row[i])) + col[j]))){
-//                 // if (i==row[i]&& j ==col[j]){
-//                     hr=row[i];
-//                     hc =col[j];
-                
-       
-//         *(*(store + hr) +hc) = count;
-//         count ++;
-     
-        
-
-//         if( count > bSize){
-//             break;
-//         }
-//         // }
-//         }
-//         // else {
-//         //     (*(*(store + i) + j)) =0;
-//         // }
-
-//     }
+  
 int j = 0;
   int **store= (int**)malloc(bSize* sizeof(int*));
     for (int i = 0; i < bSize ; i++){
+        printf("i started");
   *(store + i) = (int*)malloc(bSize* sizeof(int*));
     
         
@@ -183,26 +153,36 @@ void searchPuzzle(char** arr, char* word) {
     // as shown in the sample runs. If not found, it will print a 
     // different message as shown in the sample runs.
     // Your implementation here...
+        printf("(%d)\n",bSize);
+
     int size = strlen(word);
-    int *row = (int*) malloc(6 * sizeof(int));
-    int *col = (int*) malloc(6 * sizeof(int));
+    int *row = (int*) malloc(bSize* sizeof(int));
+    int *col = (int*) malloc(bSize * sizeof(int));
+
+    for ( int j = 0; j < bSize;j++){
+         *(col +j) =rand() %  5+ 0;
+                //  *(col +j) =j;
+
+             printf(" row values: [%d]\n", *(col + j));
+
+    }
+
+
     for ( int i = 0; i < bSize;i++){
-        *(row + i) = i;
+        // *(row + i) = rand() %  5+ 0;
+                *(row + i) = i;
+
+        printf("col values: [%d]\n", *(row + i));
 
     }
 
-     for ( int j = 0; j < bSize;j++){
-        *(col +j) = j;
 
-    }
+     
 
     // int row[6]={0,1,2,3,4,5};
 
     // int col[6]={3,3,3,3,3,3};
-    
+    printf("bozo");
     printFinal(row,col,size);
       
-
-
-    // printFinal()
 }

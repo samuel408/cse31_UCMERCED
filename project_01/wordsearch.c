@@ -1,249 +1,161 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 // Declarations of the two functions you will implement
 // Feel free to declare any helper functions or global variables
-void printPuzzle(char** arr);
-void searchPuzzle(char** arr, char* word);
+void printPuzzle(char **arr);
+void searchPuzzle(char **arr, char *word);
 int bSize;
-void declarePointer(int order, char *arr);
-int printPath(char**store,char* word, char** arr,int wordSize,int count);
-void finalPrint(char** store);
-//declare bunch of char pointers
-char *ptr0=NULL,*ptr1=NULL,*ptr2=NULL,*ptr3=NULL,*ptr4=NULL,*ptr5=NULL,*ptr6=NULL,*ptr7=NULL,*ptr8=NULL;
-int OGwordSize =0;
-
-
-
-// Main function, DO NOT MODIFY 	
-int main(int argc, char **argv) {
-    if (argc != 2) {
+// Main function, DO NOT MODIFY
+int main(int argc, char **argv)
+{
+    if (argc != 2)
+    {
         fprintf(stderr, "Usage: %s <puzzle file name>\n", argv[0]);
         return 2;
     }
     int i, j;
     FILE *fptr;
-
     // Open file for reading puzzle
     fptr = fopen(argv[1], "r");
-    if (fptr == NULL) {
+    if (fptr == NULL)
+    {
         printf("Cannot Open Puzzle File!\n");
         return 0;
     }
-
     // Read the size of the puzzle block
     fscanf(fptr, "%d\n", &bSize);
-    
+
     // Allocate space for the puzzle block and the word to be searched
-    char **block = (char**)malloc(bSize * sizeof(char*));
-
-    char *word = (char*)malloc(20 * sizeof(char));
-
+    char **block = (char **)malloc(bSize * sizeof(char *));
+    char *word = (char *)malloc(20 * sizeof(char));
     // Read puzzle block into 2D arrays
-    for(i = 0; i < bSize; i++) {
-        *(block + i) = (char*)malloc(bSize * sizeof(char));
-        for (j = 0; j < bSize - 1; ++j) {
-            fscanf(fptr, "%c ", *(block + i) + j);            
+    for (i = 0; i < bSize; i++)
+    {
+        *(block + i) = (char *)malloc(bSize * sizeof(char));
+        for (j = 0; j < bSize - 1; ++j)
+        {
+            fscanf(fptr, "%c ", *(block + i) + j);
         }
         fscanf(fptr, "%c \n", *(block + i) + j);
     }
     fclose(fptr);
-
     printf("Enter the word to search: ");
     scanf("%s", word);
-    
+
     // Print out original puzzle grid
     printf("\nPrinting puzzle before search:\n");
     printPuzzle(block);
-    
+
     // Call searchPuzzle to the word in the puzzle
     searchPuzzle(block, word);
-    
+
     return 0;
 }
 
-//declared 
- void declarePointer(int order, char *arr){
-    switch(order) {
-
-   case 0  :
-      ptr0 = arr;
-      break; /* optional */
-	
-   case 1 :
-         ptr1 = arr;
-
-      break; /* optional */
-    
-    case 2 :
-          ptr2 = arr;
-
-      break; /* optional */
-
-    case 3 :
-          ptr3 = arr;
-
-      break; /* optional */
-
-    case 4 :
-          ptr4 = arr;
-
-
-      break; /* optional */
-
-    case 5:
-          ptr5 = arr;
-
-      break; /* optional */
-    
-    case 6 :
-          ptr6 = arr;
-
-      break; /* optional */
-    
-    case 7 :
-          ptr7 = arr;
-
-      break; /* optional */
-    
-    case 8 :
-          ptr8 = arr;
-
-      break; /* optional */
-
-}
-
-}
-
-
-void printPuzzle(char** arr) {
-	// This function will print out the complete puzzle grid (arr). 
-    // It must produce the output in the SAME format as the samples 
+void printPuzzle(char **arr)
+{
+    // This function will print out the complete puzzle grid (arr).
+    // It must produce the output in the SAME format as the samples
     // in the instructions.
     // Your implementation here...
-
-
-    // int i, j;
-    // int size = sizeof(arr);
-    // //print a for loop.
-    // for(i = 0; i < size; i++){    // using pointer notation to traverse 2d array
-
-    //     for (j = 0; i < size ;j++){
-    //         printf("%c", *arr);
-    //     }
-
-    // }
-
-    int size = bSize;
-
-    for (int i = 0; i < size; i++) //accessing rows with i
+    for (int i = 0; i < bSize; i++) //accessing rows with i
     {
-        for (int j = 0; j < size; j++) //accessing columns with j
+        for (int j = 0; j < bSize; j++) //accessing columns with j
         {
-            printf(" %c ", *(*(arr + i) + j)); // array2D
-
-
+            printf("%c ", *(*(arr + i) + j)); // array2D
         }
         printf("\n");
     }
-    return;
-    //free(size);
 }
 
-void finalPrint(char**store){
-    int size = bSize;
-        for (int i = 0; i < size; i++) //accessing rows with i
+int next_func(char **arr, char *word, int previ, int prevj)
+{
+    char *next = word + 1;
+    if (*next == NULL)
     {
-        for (int j = 0; j < size-1; j++) //accessing columns with j
-        {
-            printf(" %c ", *(*(store + i) + j)); // array2D
-
-
-        }
-        printf("\n");
-
+        printf("DONE \n");
+        return -1;
     }
-  
-
-}
-
-
-
-
-int printPath(char**store,char* word, char** arr,int length ,int count){
-    // printf("%d", sizeof(store));
-
-
-if(count == OGwordSize){//we have reached the end kill program
-// printf("word size is : %d and count is %d-----", OGwordSize, count);
-return 0;
-}
-else{
-// printf("word size is : %d and count is %d", OGwordSize, count);
-
-    
-int end=0;
-             int size = bSize;// size of array rows and columns
-
-
-    for (int i = 0; i < size; i++) //accessing rows with i
+    else
     {
-            
-  *(store + i) = (char*)malloc(bSize* sizeof(char));
+        printf("Looking for: %c \n", *next);
 
-        for (int j = 0; j < size-1 ; j++) //accessing columns with j
+        for (int i = 0; i < bSize; i++)
         {
+            for (int j = 0; j < bSize; j++)
+            {
+                if (*next == *(*(arr + i) + j))
+                {
+                    //printf("Found %c at [%d, %d]\n", *next, i, j);
+                    //SAME ROW
+                    if (i == previ)
+                    {
+                        //printf("same row \n");
+                        if (j == prevj + 1)
+                        {
+                            printf("same-right \n");
+                            return next_func(arr, next, i, j);
+                        }
+                        else if (j == prevj - 1)
+                        {
+                            printf("same-left \n");
+                        }
+                    }
 
-                            
-            if(word[count] == (*(*(arr + i) + j))){//if number is equal print wordsize to label path number;
-                // printf("%d       ", count+1);
-                // *(*(store + i) + j) = (char)count+1;
-                *(*(store + i) + j ) = (char)(count+1);
+                    //ABOVE
+                    else if (i == previ - 1)
+                    {
+                        //printf("up \n");
+                        if (j == prevj)
+                        {
+                            printf("directly up\n");
+                            return next_func(arr, next, i, j);
+                        }
+                        else if (j == prevj + 1)
+                        {
+                            printf("up-right \n");
+                        }
+                        else if (j == prevj - 1)
+                        {
+                            printf("up-left \n");
+                        }
+                    }
 
-                
-
-                    // if (j == bSize){
-                    //                     printf("\n");
-
-                    // }
-                    
-                        end = printPath(  store, word, arr, length-1, count+1 );
-
-                        if(end =1){
-                            finalPrint(store);
-                                return 1;
-                                        }
-            
+                    //DOWN
+                    else if (i == previ + 1)
+                    {
+                        //printf("down \n");
+                        if (j == prevj)
+                        {
+                            printf("directly down \n");
+                        }
+                        else if (j == prevj + 1)
+                        {
+                            printf("down-right \n");
+                            return next_func(arr, next, i, j);
+                        }
+                        else if (j == prevj - 1)
+                        {
+                            printf("down-left \n");
+                        }
+                    }
+                }
             }
-            else {
-            //   printf("0       ");//if number is irrelevant print 0
-            //   printPath( word, arr, count-1);
-                 *(*(store + i) + j) = '0';
-            }
-           
         }
-                printf("\n");   
     }
-}
     return 0;
-
-
-
-    
 }
 
-void searchPuzzle(char** arr, char* word) {
-    // This function checks if arr contains the search word. If the 
-    // word appears in arr, it will print out a message and the path 
-    // as shown in the sample runs. If not found, it will print a 
+void searchPuzzle(char **arr, char *word)
+{
+    // This function checks if arr contains the search word. If the
+    // word appears in arr, it will print out a message and the path
+    // as shown in the sample runs. If not found, it will print a
     // different message as shown in the sample runs.
     // Your implementation here...
 
-    //converts all letters to capital letters.
-
-
-
+    //Convert lowercase letters into upper case
     for (int i = 0; *(word + i) != '\0'; i++)
     {
         if (*(word + i) >= 'a' && *(word + i) <= 'z')
@@ -252,60 +164,17 @@ void searchPuzzle(char** arr, char* word) {
         }
     }
 
-    //check to see if the word is inside 
-
-    int wordSize = strlen(word);//checks word size
-    // printf("%d",wordSize);
-
-     int size = bSize;
-
-     //loop that creates variables based on how many letters there are
-
-    //  for( int i =0; i < wordSize; i++){
-    //      char* ptr = NULL;
-    //  }
-    int count = 0;
-    int first =0;
-
-    for (int i = 0; i < size; i++) //accessing rows with i
+    for (int i = 0; i < bSize; i++)
     {
-        for (int j = 0; j < size; j++) //accessing columns with j
+        for (int j = 0; j < bSize; j++)
         {
-            for(int k = 0; k < wordSize;k++){// checks to see if the letter matches.
-
-                if(word[k] == (*(*(arr + i) + j))){
-                    count ++;
-                    declarePointer(k,(char*)(*(*(arr + i) + j)));
-                    
-
-                }
-                if(word[0] == (*(*(arr + i) + j))){
-                    first = 1;
-                
-                }
+            if (*word == *(*(arr + i) + j))
+            {
+                printf("\nFound %c at [%d, %d] \n", *word, i, j);
+                // char *next = word + 1;
+                next_func(arr, word, i, j);
+                //printf("%c found at [%d, %d] \n", *next, i, j);
             }
         }
     }
-
-    if (first == 1 &&  count >=1){
-        printf("Word found!");
-    }
-    else {
-        printf("Word not found!");
-        return ;
-    }
-
-    printf("\n");
-// printf("%x %x %x %x %x ",&ptr0, &ptr1, &ptr2, &ptr3, &ptr4 );
-
-// printing path 
-char **pathStore= (char**)malloc(bSize * sizeof(char*));
-        // printf("%d",sizeof(block));
-printf("Printing the search path: \n");
-    OGwordSize = wordSize;
-
-
-     int end = printPath(pathStore,word, arr, wordSize,0);
-                printf("\n");
-
 }
