@@ -121,6 +121,7 @@ void finalcall(int **newArr){
 
 int next_func(char **arr, char *word, int **newArr, int previ, int prevj)
 {
+    int prePath;
     // int *row = (int *)malloc(bSize * sizeof(int));
     // int *col = (int *)malloc(bSize * sizeof(int));
     char *next = word + 1;
@@ -158,20 +159,23 @@ int next_func(char **arr, char *word, int **newArr, int previ, int prevj)
                         if (j == prevj + 1)
                         {
                             //printf("same-right \n");
+                      prePath = path ;
                             path++;
                             *(*(newArr + i) + j) = path;
-                            if (( *(*(newArr + i) + j)) >0){
-               (*(*(newArr + i) + j)) =  (*(*(newArr + i) + j) * 10)+ j;
-                }
+                            if (path >0){
+                          path  =  (prePath * 10)+ path;
+                            }
                             return next_func(arr, next, newArr, i, j);
                         }
                         if (j == prevj - 1)
                         {
                             //printf("same-left \n");
+                            
+                            prePath = path ;
                             path++;
                             *(*(newArr + i) + j) = path;
-                            if (( *(*(newArr + i) + j)) >0){
-               (*(*(newArr + i) + j)) =  (*(*(newArr + i) + j) * 10)+ j;
+                            if (path >0){
+                          path  =  (prePath * 10)+ path;
                             }
                             return next_func(arr, next, newArr, i, j);
                         }
@@ -184,20 +188,22 @@ int next_func(char **arr, char *word, int **newArr, int previ, int prevj)
                         if (j == prevj)
                         {
                             //printf("directly up\n");
+                            prePath = path ;
                             path++;
                             *(*(newArr + i) + j) = path;
-                            if (( *(*(newArr + i) + j)) >0){
-               (*(*(newArr + i) + j)) =  (*(*(newArr + i) + j) * 10)+ j;
+                            if (path >0){
+                          path  =  (prePath * 10)+ path;
                             }
                             return next_func(arr, next, newArr, i, j);
                         }
                         if (j == prevj + 1)
                         {
                             //printf("up-right \n");
+                            prePath = path ;
                             path++;
                             *(*(newArr + i) + j) = path;
-                            if (( *(*(newArr + i) + j)) >0){
-               (*(*(newArr + i) + j)) =  (*(*(newArr + i) + j) * 10)+ j;
+                            if (path >0){
+                          path  =  (prePath * 10)+ path;
                             }
                             return next_func(arr, next, newArr, i, j);
                         }
@@ -205,10 +211,11 @@ int next_func(char **arr, char *word, int **newArr, int previ, int prevj)
                         {
                             //printf("up-left \n");
                             //return next_func(arr, next, i, j);
-                              path++;
+                              prePath = path ;
+                            path++;
                             *(*(newArr + i) + j) = path;
-                            if (( *(*(newArr + i) + j)) >0){
-               (*(*(newArr + i) + j)) =  (*(*(newArr + i) + j) * 10)+ j;
+                            if (path >0){
+                          path  =  (prePath * 10)+ path;
                             }
                             return next_func(arr, next, newArr, i, j);
                         }
@@ -221,32 +228,36 @@ int next_func(char **arr, char *word, int **newArr, int previ, int prevj)
                         if (j == prevj)
                         {
                             //printf("directly down \n");
+                            prePath = path ;
                             path++;
                             *(*(newArr + i) + j) = path;
-                            if (( *(*(newArr + i) + j)) >0){
-               (*(*(newArr + i) + j)) =  (*(*(newArr + i) + j) * 10)+ j;
+                            if (path >0){
+                          path  =  (prePath * 10)+ path;
                             }
                             return next_func(arr, next, newArr, i, j);
                         }
                         if (j == prevj + 1)
                         {
                             //printf("down-right \n");
+                             prePath = path ;
                             path++;
                             *(*(newArr + i) + j) = path;
-                            if (( *(*(newArr + i) + j)) >0){
-               (*(*(newArr + i) + j)) =  (*(*(newArr + i) + j) * 10)+ j;
+                            if (path >0){
+                          path  =  (prePath * 10)+ path;
                             }
                             return next_func(arr, next, newArr, i, j);
                         }
-                        if (j == prevj - 1)
+                        if (j == prevj - 1 )
                         {
                             //printf("down-left \n");
+                            prePath = path ;
                             path++;
                             *(*(newArr + i) + j) = path;
-                            if (( *(*(newArr + i) + j)) >0){
-               (*(*(newArr + i) + j)) =  (*(*(newArr + i) + j) * 10)+ j;
+                            if (path >0){
+                          path  =  (prePath * 10)+ path;
                             }
                             return next_func(arr, next, newArr, i, j);
+
                         }
                     }
                 }

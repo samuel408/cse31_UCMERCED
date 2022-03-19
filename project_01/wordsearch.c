@@ -1,11 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 // Declarations of the two functions you will implement
 // Feel free to declare any helper functions or global variables
 void printPuzzle(char **arr);
 void searchPuzzle(char **arr, char *word);
+void logic(char **arr, char *word, int **newArr, int i, int j);
+
 int bSize;
+int k = 1;
+
+int path = 0;
+
 // Main function, DO NOT MODIFY
 int main(int argc, char **argv)
 {
@@ -16,6 +23,7 @@ int main(int argc, char **argv)
     }
     int i, j;
     FILE *fptr;
+
     // Open file for reading puzzle
     fptr = fopen(argv[1], "r");
     if (fptr == NULL)
@@ -23,23 +31,26 @@ int main(int argc, char **argv)
         printf("Cannot Open Puzzle File!\n");
         return 0;
     }
+
     // Read the size of the puzzle block
     fscanf(fptr, "%d\n", &bSize);
 
     // Allocate space for the puzzle block and the word to be searched
     char **block = (char **)malloc(bSize * sizeof(char *));
     char *word = (char *)malloc(20 * sizeof(char));
+
     // Read puzzle block into 2D arrays
     for (i = 0; i < bSize; i++)
     {
         *(block + i) = (char *)malloc(bSize * sizeof(char));
         for (j = 0; j < bSize - 1; ++j)
-        {
+        { // remeber -1
             fscanf(fptr, "%c ", *(block + i) + j);
         }
         fscanf(fptr, "%c \n", *(block + i) + j);
     }
     fclose(fptr);
+
     printf("Enter the word to search: ");
     scanf("%s", word);
 
@@ -55,200 +66,269 @@ int main(int argc, char **argv)
 
 void printPuzzle(char **arr)
 {
-    // This function will print out the complete puzzle grid (arr).
-    // It must produce the output in the SAME format as the samples
-    // in the instructions.
-    // Your implementation here...
-    for (int i = 0; i < bSize; i++) //accessing rows with i
-    {
-        for (int j = 0; j < bSize; j++) //accessing columns with j
+    // This function will print out the complete puzzle grid (arr). It
+    //must produce the output in the SAME format as the samples in the instructions.
+
+    for (int i = 0; i < bSize; i++)
+    { //<
+        for (int j = 0; j < bSize; j++)
         {
-            printf("%c ", *(*(arr + i) + j)); // array2D
+            printf("%c ", *(*(arr + i) + j));
+        }
+        printf("\n");
+    }
+}
+int mod(int **newArr)
+{
+    for (int i = 0; i < bSize; i++)
+    {
+        for (int j = 0; j < bSize; j++)
+        {
+            *(*(newArr + i) + j) = 0;
+        }
+        printf("\n");
+    }
+}
+void finalcall(int **newArr)
+{
+    // int count = 1;
+    // for (int i = 0; i < bSize; i++)
+    // {
+    // for (int j = 0; j < bSize; j++)
+    // {
+    // if (( *(*(newArr + i) + j)) >0){
+    // (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10)+ j;
+
+    // }
+    // }
+    // printf("\n");
+    // }
+    //printer
+    for (int i = 0; i < bSize; i++)
+    {
+        for (int j = 0; j < bSize; j++)
+        {
+            printf("%d\t ", (*(*(newArr + i) + j)));
         }
         printf("\n");
     }
 }
 
-int next_func(int *row, int *col, char **arr, char *word, int previ, int prevj, int count)
+int next_func(char **arr, char *word, int **newArr, int previ, int prevj)
 {
+    //path++;
+    //path = 1;
+    // int *row = (int *)malloc(bSize * sizeof(int));
+    // int *col = (int *)malloc(bSize * sizeof(int));
     char *next = word + 1;
-    printf(" %d %c", count, *next);
+    // todo;
+
     if (*next == NULL)
     {
-        printf("word is found! \n");
-        return -1;
+        //mod(newArr);
+        printf("\nWord found!\n");
+        finalcall(newArr);
+        return 1;
     }
-
     else
     {
-        printf("Looking for: %c \n", *next);
-
+        //printf("path = %d \n", path);
+        //printf("Looking for: %c \n", *next);
         for (int i = 0; i < bSize; i++)
         {
-            (*(row + i)) = i;
             for (int j = 0; j < bSize; j++)
             {
+                // if (( *(*(newArr + i) + j)) >0){
+                // (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10)+ j;
+                // }
+
                 if (*next == *(*(arr + i) + j))
                 {
+                    // path++;
+                    // *(row + i) = previ;
+                    // *(col + j) = prevj;
                     //printf("Found %c at [%d, %d]\n", *next, i, j);
                     //SAME ROW
                     if (i == previ)
                     {
-                        *(row + i) = i;
-
                         //printf("same row \n");
                         if (j == prevj + 1)
                         {
-                            printf("same-right \n");
-                            printf("saved{%d,%d}\n", i, j);
-
-                            int ff = next_func(row, col, arr, next, i, j, count + 1);
-                            if (ff == -1)
+                            //printf("same-right \n");
+                            path++;
+                            // *(*(newArr + i) + j) = path;
+                            if (path > 0)
                             {
-
-                                *(col + count) = j;
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + (path);
                             }
                             else
                             {
-                            return next_func(row, col, arr, next, i, j, count + 1);
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + path;
+                                printf("path = %d \n", path);
+                                *(*(newArr + i) + j) = path;
                             }
-                            
-                            // return next_func(row, col, arr, next, i, j, count + 1);
-                        }
+                            //path++;
 
-                        else if (j == prevj - 1)
+                            return next_func(arr, next, newArr, i, j);
+                        }
+                        if (j == prevj - 1)
                         {
-                            printf("same-left \n");
+                            //printf("same-left \n");
+                            path++;
+                            // *(*(newArr + i) + j) = path;
+                            if (path > 0)
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + (path);
+                            }
+                            else
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + path;
+                                printf("path = %d \n", path);
+                                *(*(newArr + i) + j) = path;
+                            }
+                            //path++;
+
+                            return next_func(arr, next, newArr, i, j);
                         }
                     }
 
                     //ABOVE
-                    else if (i == previ - 1)
+                    if (i == previ - 1)
                     {
-                        *(row + i) = i;
-
                         //printf("up \n");
                         if (j == prevj)
                         {
-                            printf("directly up\n");
-                            *(col + count) = j;
-                            printf("saved{%d,%d}\n", i, j);
+                            //printf("directly up\n");
+                            path++;
+                            // *(*(newArr + i) + j) = path;
+                            if (path > 0)
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + (path);
+                            }
+                            else
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + path;
+                                printf("path = %d \n", path);
+                                *(*(newArr + i) + j) = path;
+                            }
+                            //path++;
 
-                            return next_func(row, col, arr, next, i, j, count + 1);
+                            return next_func(arr, next, newArr, i, j);
                         }
-                        else if (j == prevj + 1)
+                        if (j == prevj + 1)
                         {
+                            //printf("up-right \n");
+                            path++;
+                            // *(*(newArr + i) + j) = path;
+                            if (path > 0)
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + (path);
+                            }
+                            else
+                            {
 
-                            printf("up-right \n");
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + path;
+                                printf("path = %d \n", path);
+                                *(*(newArr + i) + j) = path;
+                            }
+                            //path++;
+                            return next_func(arr, next, newArr, i, j);
                         }
-                        else if (j == prevj - 1)
+                        if (j == prevj - 1 && bSize > 5)
                         {
+                            //printf("up-left \n");
+                            //return next_func(arr, next, i, j);
+                            path++;
+                            // *(*(newArr + i) + j) = path;
+                            if (path > 0)
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + (path);
+                            }
+                            else
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + path;
+                                printf("path = %d \n", path);
+                                *(*(newArr + i) + j) = path;
+                            }
+                            //path++;
 
-                            printf("up-left \n");
+                            return next_func(arr, next, newArr, i, j);
                         }
                     }
 
                     //DOWN
-                    else if (i == previ + 1)
+                    if (i == previ + 1)
                     {
-                        *(row + i) = i;
-
                         //printf("down \n");
                         if (j == prevj)
                         {
-                            printf("directly down \n");
-                        }
-                        else if (j == prevj + 1)
-                        {
-                            printf("down-right \n");
-                            *(col + count) = j;
-                            printf("saved{%d,%d}\n", i, j);
+                            //printf("directly down \n");
+                            path++;
+                            // *(*(newArr + i) + j) = path;
+                            if (path > 0)
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + (path);
+                            }
+                            else
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + path;
+                                printf("path = %d \n", path);
+                                *(*(newArr + i) + j) = path;
+                            }
+                            //path++;
 
-                            return next_func(row, col, arr, next, i, j, count + 1);
+                            return next_func(arr, next, newArr, i, j);
                         }
-                        else if (j == prevj - 1)
+                        if (j == prevj + 1)
                         {
-                            printf("down-left \n");
+                            //printf("down-right \n");
+                            path++;
+                            // *(*(newArr + i) + j) = path;
+                            if (path > 0)
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + (path);
+                            }
+                            else
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + path;
+                                printf("path = %d \n", path);
+                                *(*(newArr + i) + j) = path;
+                            }
+                            //path++;
+
+                            return next_func(arr, next, newArr, i, j);
+                        }
+                        if (j == prevj - 1)
+                        {
+                            //printf("down-left \n");
+                            path++;
+
+                            if (path > 0)
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + (path);
+                            }
+                            else
+                            {
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + path;
+                                printf("path = %d \n", path);
+                                *(*(newArr + i) + j) = path;
+                            }
+                            //path++;
+
+                            return next_func(arr, next, newArr, i, j);
                         }
                     }
                 }
             }
         }
+        //printf("word not found\n");
     }
-    // printf("word is not found \n");
     return 0;
-}
-
-void printFinal(int *row, int *col)
-{
-    int **store = (int **)malloc(bSize * sizeof(int *));
-
-    int hr = 0, hc = 0;
-    int count = 1;
-    int j = 0;
-    for (int i = 0; i < bSize; i++)
-    {
-        *(store + i) = (int *)malloc(bSize * sizeof(int *));
-        hr = *(row + i);
-        hc = *(col + i);
-        // if (*(*(store + hr) + hc) > 0)
-        // {
-        //     printf("(%d)", (*(*(store + hr) + hc) * 10) + count);
-        //     *(*(store + hr) + hc) = (*(*(store + hr) + hc) * 10) + count;
-        //     count++;
-        // }
-
-        *(*(store + hr) + hc) = count;
-        count++;
-
-        if (count > bSize)
-        {
-            break;
-        }
-        j++;
-        // }
-        // else {
-        // (*(*(store + i) + j)) =0;
-        // }
-    }
-
-    for (int i = 0; i < bSize; i++)
-    {
-        // *(store + i) = (int*)malloc(bSize* sizeof(int*));
-
-        for (int j = 0; j < bSize; j++)
-        {
-            if ((*(*(store + i) + j)) > bSize)
-            {
-                (*(*(store + i) + j)) = 0;
-            }
-        }
-    }
-    // print
-
-    for (int i = 0; i < bSize; i++) //accessing rows with i
-    {
-        for (int j = 0; j < bSize; j++) //accessing columns with j
-        {
-            printf(" %d ", *(*(store + i) + j)); // array2D
-        }
-        printf("\n");
-    }
 }
 
 void searchPuzzle(char **arr, char *word)
 {
-    // This function checks if arr contains the search word. If the
-    // word appears in arr, it will print out a message and the path
-    // as shown in the sample runs. If not found, it will print a
-    // different message as shown in the sample runs.
-    // Your implementation here...
-
     //Convert lowercase letters into upper case
-
-    int *row = (int *)malloc(bSize * sizeof(int));
-    int *col = (int *)malloc(bSize * sizeof(int));
-
     for (int i = 0; *(word + i) != '\0'; i++)
     {
         if (*(word + i) >= 'a' && *(word + i) <= 'z')
@@ -257,23 +337,45 @@ void searchPuzzle(char **arr, char *word)
         }
     }
 
+    //CREATING NEW ARRAY TO STORE OUR NEW ARRAY WITH THE PATH
+    int **newArr = (int **)malloc(bSize * sizeof(int *));
+
+    //INITIALIZE THE NEW ARRAY WITH 0 FOR EACH ELEMENT
+
     for (int i = 0; i < bSize; i++)
     {
+        *(newArr + i) = (int *)malloc(bSize * sizeof(int *));
         for (int j = 0; j < bSize; j++)
         {
-            if (*word == *(*(arr + i) + j))
+            *(*(newArr + i) + j) = 0;
+        }
+    }
+
+    //measures the length of the word we are looking for
+    int wordCount = 0;
+    for (int i = 0; *(word + i) != '\0'; i++)
+    {
+        wordCount++;
+    } //+1
+
+    for (int i = 0; i < bSize; i++)
+    { //goes through the rows of the word search puzzle
+        mod(newArr);
+        path = 0;
+        for (int j = 0; j < bSize; j++)
+        { //goes through the collums of the word search puzzle
+
+            // *(word) points to the first character of our string
+            if (*(word) == *(*(arr + i) + j))
             {
-                *(row + 0) = i;
-                *(col + 0) = j;
-                printf("\nFound %c at [%d, %d] \n", *word, i, j);
-                // char *next = word + 1;
-                // *(row+0)=i;
-                // *(col+0)=j;
-
-                int end = next_func(row, col, arr, word, i, j, 1);
-                //printf("%c found at [%d, %d] \n", *next, i, j);
-
-                printFinal(row, col);
+                path++;
+                //path = 1;
+                *(*(newArr + i) + j) = path;
+                // if ((*(*(newArr + i) + j)) > 0)
+                // {
+                //     (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + i;
+                // }
+                next_func(arr, word, newArr, i, j);
             }
         }
     }
