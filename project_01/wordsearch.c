@@ -6,12 +6,11 @@
 // Feel free to declare any helper functions or global variables
 void printPuzzle(char **arr);
 void searchPuzzle(char **arr, char *word);
-void logic(char **arr, char *word, int **newArr, int i, int j);
 
 int bSize;
 int k = 1;
 
-int path = 0;
+int path ;
 
 // Main function, DO NOT MODIFY
 int main(int argc, char **argv)
@@ -78,6 +77,7 @@ void printPuzzle(char **arr)
         printf("\n");
     }
 }
+//used to clear the array when trying  a new path
 int mod(int **newArr)
 {
     for (int i = 0; i < bSize; i++)
@@ -89,21 +89,10 @@ int mod(int **newArr)
         printf("\n");
     }
 }
+//prints final path 
 void finalcall(int **newArr)
 {
-    // int count = 1;
-    // for (int i = 0; i < bSize; i++)
-    // {
-    // for (int j = 0; j < bSize; j++)
-    // {
-    // if (( *(*(newArr + i) + j)) >0){
-    // (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10)+ j;
-
-    // }
-    // }
-    // printf("\n");
-    // }
-    //printer
+   
     for (int i = 0; i < bSize; i++)
     {
         for (int j = 0; j < bSize; j++)
@@ -116,38 +105,38 @@ void finalcall(int **newArr)
 
 int next_func(char **arr, char *word, int **newArr, int previ, int prevj)
 {
-    //path++;
-    //path = 1;
-    // int *row = (int *)malloc(bSize * sizeof(int));
-    // int *col = (int *)malloc(bSize * sizeof(int));
-    char *next = word + 1;
-    // todo;
+   
+    char *next = word + 1;//points to the next word in the string
 
-    if (*next == NULL)
+    if (*next == NULL)//if the next word does not exist
     {
-        //mod(newArr);
-        printf("\nWord found!\n");
-        finalcall(newArr);
+        //if the length of the path is shorter than the length of the word doesnt exist.
+        
+        if (path < strlen(word))
+        {
+            printf("\nWord Not found!\n");
+        }
+        else//else found word
+        {
+            printf("\nWord found!\n");
+            finalcall(newArr);
+        }
+
         return 1;
     }
+
     else
     {
-        //printf("path = %d \n", path);
-        //printf("Looking for: %c \n", *next);
-        for (int i = 0; i < bSize; i++)
+        
+        for (int i = 0; i < bSize; i++) //iterate
         {
             for (int j = 0; j < bSize; j++)
             {
-                // if (( *(*(newArr + i) + j)) >0){
-                // (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10)+ j;
-                // }
+                
 
                 if (*next == *(*(arr + i) + j))
                 {
-                    // path++;
-                    // *(row + i) = previ;
-                    // *(col + j) = prevj;
-                    //printf("Found %c at [%d, %d]\n", *next, i, j);
+                    
                     //SAME ROW
                     if (i == previ)
                     {
@@ -157,9 +146,9 @@ int next_func(char **arr, char *word, int **newArr, int previ, int prevj)
                             //printf("same-right \n");
                             path++;
                             // *(*(newArr + i) + j) = path;
-                            if (path > 0)
+                            if (path > 0)//if path is taken by a non zero number the route is already in progress and we have to over lap.
                             {
-                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + (path);
+                                (*(*(newArr + i) + j)) = (*(*(newArr + i) + j) * 10) + (path);// overlap equation
                             }
                             else
                             {
@@ -169,7 +158,7 @@ int next_func(char **arr, char *word, int **newArr, int previ, int prevj)
                             }
                             //path++;
 
-                            return next_func(arr, next, newArr, i, j);
+                            return next_func(arr, next, newArr, i, j);// recursion
                         }
                         if (j == prevj - 1)
                         {
@@ -357,7 +346,7 @@ void searchPuzzle(char **arr, char *word)
     {
         wordCount++;
     } //+1
-
+    int first;
     for (int i = 0; i < bSize; i++)
     { //goes through the rows of the word search puzzle
         mod(newArr);
@@ -369,6 +358,7 @@ void searchPuzzle(char **arr, char *word)
             if (*(word) == *(*(arr + i) + j))
             {
                 path++;
+                first=1;
                 //path = 1;
                 *(*(newArr + i) + j) = path;
                 // if ((*(*(newArr + i) + j)) > 0)
@@ -378,5 +368,10 @@ void searchPuzzle(char **arr, char *word)
                 next_func(arr, word, newArr, i, j);
             }
         }
+    }
+    
+    if (first !=1 )
+    {
+        printf("Word Not Found!\n");
     }
 }
